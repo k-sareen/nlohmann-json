@@ -1,0 +1,72 @@
+package {
+    default_applicable_licenses: ["external_nlohmann_json_license"],
+}
+
+license {
+    name: "external_nlohmann_json_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-MIT",
+        "legacy_unencumbered",
+    ],
+    license_text: [
+        "LICENSE.MIT",
+    ],
+}
+
+// cc_defaults {
+//     name: "libjsoncpp_defaults",
+//
+//     srcs: [
+//         "src/lib_json/json_reader.cpp",
+//         "src/lib_json/json_value.cpp",
+//         "src/lib_json/json_writer.cpp",
+//     ],
+//
+//     local_include_dirs: [
+//         "src/lib_json",
+//     ],
+//
+//     include_build_directory: false,
+//
+//     export_include_dirs: ["include"],
+//
+//     cflags: [
+//         "-DJSON_USE_EXCEPTION=0",
+//         "-DJSONCPP_NO_LOCALE_SUPPORT",
+//         "-Wall",
+//         "-Werror",
+//         "-Wno-implicit-fallthrough",
+//         // src/lib_json/json_reader.cpp:210  has -Wno-implicit-fallthrough
+//     ],
+//
+//     target: {
+//         darwin: {
+//             enabled: true,
+//         },
+//         windows: {
+//             enabled: true,
+//         },
+//     },
+// }
+
+cc_library_headers {
+    name: "libjson_headers",
+    vendor_available: true,
+    product_available: true,
+    vndk: {
+        enabled: true,
+        support_system_process: true,
+    },
+    host_supported: true,
+    ramdisk_available: true,
+    vendor_ramdisk_available: true,
+    recovery_available: true,
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    native_bridge_supported: true,
+    min_sdk_version: "29",
+    export_include_dirs: ["single_include"],
+}
